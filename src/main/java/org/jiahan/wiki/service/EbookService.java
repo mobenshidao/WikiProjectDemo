@@ -6,7 +6,7 @@ import org.jiahan.wiki.domain.EbookExample;
 import org.jiahan.wiki.mapper.EbookMapper;
 import org.jiahan.wiki.req.EbookReq;
 import org.jiahan.wiki.resp.EbookResp;
-import org.springframework.beans.BeanUtils;
+import org.jiahan.wiki.utils.CopyUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,17 +30,17 @@ public class EbookService {
 
         List<EbookResp> respList = new ArrayList<>();
 
-        for (Ebook ebook:ebookList){
+//         for (Ebook ebook : ebookList) {
+//             // EbookResp ebookResp = new EbookResp();
+//             // BeanUtils.copyProperties(ebook, ebookResp);
+//             EbookResp ebookResp = CopyUtil.copy(ebook, EbookResp.class);
+//
+//             respList.add(ebookResp);
+//         }
 
-            EbookResp ebookResp = new EbookResp();
+        List<EbookResp> list = CopyUtil.copyList(ebookList, EbookResp.class);
 
-            BeanUtils.copyProperties(ebook,ebookResp);
-
-            respList.add(ebookResp);
-
-        }
-
-        return respList;
+        return list;
 
     }
 
