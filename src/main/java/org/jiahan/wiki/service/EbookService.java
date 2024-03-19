@@ -8,6 +8,7 @@ import org.jiahan.wiki.req.EbookReq;
 import org.jiahan.wiki.resp.EbookResp;
 import org.jiahan.wiki.utils.CopyUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,11 @@ public class EbookService {
 
         EbookExample.Criteria criteria = ebookExample.createCriteria();
 
-        criteria.andNameLike("%" + req.getName() + "%");
+        if (!ObjectUtils.isEmpty(req.getName())){
+
+            criteria.andNameLike("%" + req.getName() + "%");
+
+        }
 
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
 
