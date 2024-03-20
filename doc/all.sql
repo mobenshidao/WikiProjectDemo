@@ -26,8 +26,8 @@ drop table if exists `ebook`;
 create table `ebook`(
                            `id` bigint not null comment 'id',
                            `name` varchar(50) comment 'name',
-                           `category1_id` bigint comment 'category1',
-                           `category2_id` bigint comment 'category2',
+                           `category1Id` bigint comment 'category1',
+                           `category2Id` bigint comment 'category2',
                            `description` varchar(200) comment 'description',
                            `cover` varchar(200) comment 'cover',
                            `doc_count` int comment 'doccount',

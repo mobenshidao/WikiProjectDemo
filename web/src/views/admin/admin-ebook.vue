@@ -16,7 +16,7 @@
         </template>
         <template v-slot:action="{ text, record }">
           <a-space size="small">
-            <a-button type="primary" @click="edit">
+            <a-button type="primary" @click="edit(record)">
               编辑
             </a-button>
             <a-button type="danger">
@@ -28,7 +28,23 @@
     </a-layout-content>
   </a-layout>
   <a-modal v-model:visible="modelVisible" title="EbookManage" :confirm-loading="modelLoading" @ok="handleOK">
-    <p>test</p>
+    <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+      <a-form-item label="封面">
+        <a-input v-model:value="ebook.cover" />
+      </a-form-item>
+      <a-form-item label="名称">
+        <a-input v-model:value="ebook.name" />
+      </a-form-item>
+      <a-form-item label="分类1">
+        <a-input v-model:value="ebook.category1Id" />
+      </a-form-item>
+      <a-form-item label="分类2">
+        <a-input v-model:value="ebook.category2Id" />
+      </a-form-item>
+      <a-form-item label="描述">
+        <a-input v-model:value="ebook.description" type="textarea" />
+      </a-form-item>
+    </a-form>
   </a-modal>
 </template>
 
@@ -64,7 +80,8 @@ export default defineComponent({
       },
       {
         title: '分类2',
-        key: 'category2id'
+        key: 'category2id',
+        dataIndex: 'category2Id'
       },
       {
         title: '文档数',
@@ -119,6 +136,7 @@ export default defineComponent({
       });
     };
 
+    const ebook = ref();
     const modelVisible = ref(false);
     const modelLoading = ref(false);
     const handleOK = () => {
@@ -132,8 +150,9 @@ export default defineComponent({
     /**
      * 编辑
      */
-    const edit = () => {
+    const edit = (record :any) => {
       modelVisible.value = true;
+      ebook.value = record
     };
 
     onMounted(() => {
@@ -151,6 +170,8 @@ export default defineComponent({
       handleTableChange,
 
       edit,
+
+      ebook,
       modelVisible,
       modelLoading,
       handleOK
