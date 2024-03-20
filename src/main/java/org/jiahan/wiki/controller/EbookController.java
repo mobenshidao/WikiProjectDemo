@@ -1,6 +1,7 @@
 package org.jiahan.wiki.controller;
 
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.jiahan.wiki.req.EbookQueryReq;
 import org.jiahan.wiki.req.EbookSaveReq;
 import org.jiahan.wiki.resp.CommonResp;
@@ -20,7 +21,7 @@ public class EbookController {
     private EbookService ebookService;
 
     @GetMapping("/list")
-    public CommonResp list(EbookQueryReq req){
+    public CommonResp list(@Valid EbookQueryReq req){
 
         CommonResp<PageResp<EbookResp>> resp = new CommonResp<>();
 
