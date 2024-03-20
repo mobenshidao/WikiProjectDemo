@@ -1,8 +1,11 @@
 package org.jiahan.wiki.req;
 
+import jakarta.validation.constraints.NotNull;
+
 public class EbookSaveReq {
     private Long id;
 
+    @NotNull(message = "NOT NULL")
     private String name;
 
     private Long category1Id;
