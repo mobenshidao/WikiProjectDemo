@@ -1,5 +1,7 @@
 package org.jiahan.wiki.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.jiahan.wiki.domain.Ebook;
 import org.jiahan.wiki.domain.EbookExample;
@@ -7,33 +9,37 @@ import org.jiahan.wiki.mapper.EbookMapper;
 import org.jiahan.wiki.req.EbookReq;
 import org.jiahan.wiki.resp.EbookResp;
 import org.jiahan.wiki.utils.CopyUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class EbookService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(EbookService.class);
+
     @Resource
     private EbookMapper ebookMapper;
 
     public List<EbookResp> list(EbookReq req){
-
         EbookExample ebookExample = new EbookExample();
-
         EbookExample.Criteria criteria = ebookExample.createCriteria();
-
         if (!ObjectUtils.isEmpty(req.getName())){
 
             criteria.andNameLike("%" + req.getName() + "%");
 
         }
-
+        PageHelper.startPage(1,3);
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
 
-        List<EbookResp> respList = new ArrayList<>();
+        PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);
+        LOG.info("Rows: {}",pageInfo.getTotal());
+        LOG.info("Pages: {}",pageInfo.getPages());
+
+//        List<EbookResp> respList = new ArrayList<>();
 
 //         for (Ebook ebook : ebookList) {
 //             // EbookResp ebookResp = new EbookResp();
