@@ -16,7 +16,7 @@
         </template>
         <template v-slot:action="{ text, record }">
           <a-space size="small">
-            <a-button type="primary">
+            <a-button type="primary" @click="edit">
               编辑
             </a-button>
             <a-button type="danger">
@@ -27,6 +27,9 @@
       </a-table>
     </a-layout-content>
   </a-layout>
+  <a-modal v-model:visible="modelVisible" title="EbookManage" :confirm-loading="modelLoading" @ok="handleOK">
+    <p>test</p>
+  </a-modal>
 </template>
 
 <script lang="ts">
@@ -116,6 +119,23 @@ export default defineComponent({
       });
     };
 
+    const modelVisible = ref(false);
+    const modelLoading = ref(false);
+    const handleOK = () => {
+      modelLoading.value = true;
+      setTimeout(() => {
+        modelVisible.value = false;
+        modelLoading.value = false;
+      },200);
+    };
+
+    /**
+     * 编辑
+     */
+    const edit = () => {
+      modelVisible.value = true;
+    };
+
     onMounted(() => {
       handleQuery({
         page: 1,
@@ -128,7 +148,13 @@ export default defineComponent({
       pagination,
       columns,
       loading,
-      handleTableChange
+      handleTableChange,
+
+      edit,
+      modelVisible,
+      modelLoading,
+      handleOK
+
     }
   }
 });
