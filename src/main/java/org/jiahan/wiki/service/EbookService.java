@@ -11,6 +11,7 @@ import org.jiahan.wiki.req.EbookSaveReq;
 import org.jiahan.wiki.resp.EbookResp;
 import org.jiahan.wiki.resp.PageResp;
 import org.jiahan.wiki.utils.CopyUtil;
+import org.jiahan.wiki.utils.SnowFlake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class EbookService {
 
     @Resource
     private EbookMapper ebookMapper;
+
+    @Resource
+    public SnowFlake snowFlake;
 
     public PageResp<EbookResp> list(EbookQueryReq req){
         EbookExample ebookExample = new EbookExample();
@@ -68,6 +72,7 @@ public class EbookService {
 
         if (ObjectUtils.isEmpty(req.getId())) {
             // 新增
+            ebook.setId(snowFlake.nextId());
             ebookMapper.insert(ebook);
         } else {
             // 更新
