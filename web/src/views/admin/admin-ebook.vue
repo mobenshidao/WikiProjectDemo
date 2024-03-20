@@ -51,6 +51,7 @@
 <script lang="ts">
 import {defineComponent, onMounted, ref} from 'vue';
 import axios from 'axios';
+import {message} from "ant-design-vue";
 
 export default defineComponent({
   name: 'AdminEbook',
@@ -141,10 +142,23 @@ export default defineComponent({
     const modelLoading = ref(false);
     const handleOK = () => {
       modelLoading.value = true;
-      setTimeout(() => {
+
+      axios.post("/ebook/save", ebook.value).then((response) => {
+
         modelVisible.value = false;
         modelLoading.value = false;
-      },200);
+        const data = response.data; // data = commonResp
+        if (data.success) {
+          modelVisible.value = false;
+          // 重新加载列表
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize,
+          });
+        } else {
+          message.error(data.message);
+        }
+      });
     };
 
     /**

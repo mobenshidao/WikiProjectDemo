@@ -6,7 +6,8 @@ import jakarta.annotation.Resource;
 import org.jiahan.wiki.domain.Ebook;
 import org.jiahan.wiki.domain.EbookExample;
 import org.jiahan.wiki.mapper.EbookMapper;
-import org.jiahan.wiki.req.EbookReq;
+import org.jiahan.wiki.req.EbookQueryReq;
+import org.jiahan.wiki.req.EbookSaveReq;
 import org.jiahan.wiki.resp.EbookResp;
 import org.jiahan.wiki.resp.PageResp;
 import org.jiahan.wiki.utils.CopyUtil;
@@ -25,7 +26,7 @@ public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
 
-    public PageResp<EbookResp> list(EbookReq req){
+    public PageResp<EbookResp> list(EbookQueryReq req){
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         if (!ObjectUtils.isEmpty(req.getName())){
@@ -58,6 +59,20 @@ public class EbookService {
         pageResp.setList(list);
 
         return pageResp;
+
+    }
+
+    public void save(EbookSaveReq req){
+
+        Ebook ebook =CopyUtil.copy(req,Ebook.class);
+
+        if (ObjectUtils.isEmpty(req.getId())) {
+            // 新增
+            ebookMapper.insert(ebook);
+        } else {
+            // 更新
+            ebookMapper.updateByPrimaryKey(ebook);
+        }
 
     }
 
