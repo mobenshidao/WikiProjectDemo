@@ -7,12 +7,15 @@ import org.jiahan.wiki.resp.CommonResp;
 import org.jiahan.wiki.resp.EbookResp;
 import org.jiahan.wiki.resp.PageResp;
 import org.jiahan.wiki.service.EbookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ebook")
 public class EbookController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(EbookService.class);
     @Resource
     private EbookService ebookService;
 
@@ -34,6 +37,19 @@ public class EbookController {
         CommonResp resp = new CommonResp<>();
 
         ebookService.save(req);
+
+        return resp;
+
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public CommonResp delete(@PathVariable Long id){
+
+        CommonResp resp = new CommonResp<>();
+
+        ebookService.delete(id);
+
+        LOG.info("ConID="+id);
 
         return resp;
 

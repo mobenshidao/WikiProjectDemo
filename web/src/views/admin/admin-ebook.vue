@@ -24,9 +24,16 @@
             <a-button type="primary" @click="edit(record)">
               编辑
             </a-button>
-            <a-button type="danger">
-              删除
-            </a-button>
+            <a-popconfirm
+                title="Are you sure delete this task?"
+                ok-text="Yes"
+                cancel-text="No"
+                @confirm="del(record.id)"
+            >
+             <a-button type="danger">
+               删除
+             </a-button>
+            </a-popconfirm>
           </a-space>
         </template>
       </a-table>
@@ -180,6 +187,20 @@ export default defineComponent({
       modelVisible.value = true;
       ebook.value = {}
     };
+    const del = (id: number) => {
+      axios.delete("/ebook/delete/"+id).then((response) => {
+        const data = response.data; // data = commonResp
+        if (data.success) {
+          // 重新加载列表
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize,
+          });
+        } else {
+          message.error(data.message);
+        }
+      })
+    };
 
     onMounted(() => {
       handleQuery({
@@ -194,6 +215,7 @@ export default defineComponent({
       columns,
       loading,
       handleTableChange,
+      del,
 
       edit,
       add,
