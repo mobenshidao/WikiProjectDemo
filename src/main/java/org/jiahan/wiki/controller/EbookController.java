@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import org.jiahan.wiki.req.EbookQueryReq;
 import org.jiahan.wiki.req.EbookSaveReq;
 import org.jiahan.wiki.resp.CommonResp;
-import org.jiahan.wiki.resp.EbookResp;
+import org.jiahan.wiki.resp.EbookQueryResp;
 import org.jiahan.wiki.resp.PageResp;
 import org.jiahan.wiki.service.EbookService;
 import org.slf4j.Logger;
@@ -23,9 +23,9 @@ public class EbookController {
     @GetMapping("/list")
     public CommonResp list(@Valid EbookQueryReq req){
 
-        CommonResp<PageResp<EbookResp>> resp = new CommonResp<>();
+        CommonResp<PageResp<EbookQueryResp>> resp = new CommonResp<>();
 
-        PageResp<EbookResp> list = ebookService.list(req);
+        PageResp<EbookQueryResp> list = ebookService.list(req);
 
         resp.setContent(list);
 

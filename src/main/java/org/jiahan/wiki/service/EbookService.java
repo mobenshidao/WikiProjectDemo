@@ -8,7 +8,7 @@ import org.jiahan.wiki.domain.EbookExample;
 import org.jiahan.wiki.mapper.EbookMapper;
 import org.jiahan.wiki.req.EbookQueryReq;
 import org.jiahan.wiki.req.EbookSaveReq;
-import org.jiahan.wiki.resp.EbookResp;
+import org.jiahan.wiki.resp.EbookQueryResp;
 import org.jiahan.wiki.resp.PageResp;
 import org.jiahan.wiki.utils.CopyUtil;
 import org.jiahan.wiki.utils.SnowFlake;
@@ -30,7 +30,7 @@ public class EbookService {
     @Resource
     public SnowFlake snowFlake;
 
-    public PageResp<EbookResp> list(EbookQueryReq req){
+    public PageResp<EbookQueryResp> list(EbookQueryReq req){
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         if (!ObjectUtils.isEmpty(req.getName())){
@@ -55,9 +55,9 @@ public class EbookService {
 //             respList.add(ebookResp);
 //         }
 
-        List<EbookResp> list = CopyUtil.copyList(ebookList, EbookResp.class);
+        List<EbookQueryResp> list = CopyUtil.copyList(ebookList, EbookQueryResp.class);
 
-        PageResp<EbookResp> pageResp = new PageResp();
+        PageResp<EbookQueryResp> pageResp = new PageResp();
 
         pageResp.setTotal(pageInfo.getTotal());
         pageResp.setList(list);
