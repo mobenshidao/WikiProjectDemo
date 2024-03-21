@@ -41,3 +41,29 @@ insert into `ebook` (id,name,description) value (2, 'Vue guide','Guide you use V
 insert into `ebook` (id,name,description) value (3, 'Python guide','Best book teach you how to creat application with Python');
 insert into `ebook` (id,name,description) value (4, 'Guide of Mysql','How to use Mysql');
 insert into `ebook` (id,name,description) value (5, 'Master of Oracle','Lead you Learning of Oracle');
+
+drop table if exists `category`;
+create table `category`(
+                           `id` bigint not null comment 'id',
+                           `parent` bigint not null default 0 comment 'fatherId',
+                           `name` varchar(50) comment 'name',
+                           `sort` int comment 'sort',
+                           primary key(`id`)
+)engine = innodb default charset = utf8mb4 comment = 'category';
+
+insert into `category` (id,parent,name,sort) value (100,000,'前端开发',100);
+insert into `category` (id,parent,name,sort) value (101,100,'Vue',101);
+insert into `category` (id,parent,name,sort) value (102,100,'HTML & CSS',102);
+insert into `category` (id,parent,name,sort) value (200,000,'Java',200);
+insert into `category` (id,parent,name,sort) value (201,200,'基础应用',201);
+insert into `category` (id,parent,name,sort) value (202,200,'框架应用',202);
+insert into `category` (id,parent,name,sort) value (300,000,'Python',300);
+insert into `category` (id,parent,name,sort) value (301,300,'基础应用',301);
+insert into `category` (id,parent,name,sort) value (302,300,'进阶方向应用',302);
+insert into `category` (id,parent,name,sort) value (400,000,'数据库',400);
+insert into `category` (id,parent,name,sort) value (401,400,'MySQL',401);
+insert into `category` (id,parent,name,sort) value (500,000,'其它',500);
+insert into `category` (id,parent,name,sort) value (501,500,'服务器',501);
+insert into `category` (id,parent,name,sort) value (502,500,'开发工具',502);
+insert into `category` (id,parent,name,sort) value (503,500,'热门服务端语言',503);
+##insert into `category` (id,parent,name,sort) value ();
