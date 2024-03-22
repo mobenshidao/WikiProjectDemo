@@ -4,14 +4,16 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.jiahan.wiki.req.DocQueryReq;
 import org.jiahan.wiki.req.DocSaveReq;
-import org.jiahan.wiki.resp.DocQueryResp;
 import org.jiahan.wiki.resp.CommonResp;
+import org.jiahan.wiki.resp.DocQueryResp;
 import org.jiahan.wiki.resp.PageResp;
 import org.jiahan.wiki.service.DocService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -57,14 +59,17 @@ public class DocController {
 
     }
 
-    @DeleteMapping("/delete/{id}")
-    public CommonResp delete(@PathVariable Long id){
+    @DeleteMapping("/delete/{idsStr}")
+    public CommonResp delete(@PathVariable String idsStr){
 
         CommonResp resp = new CommonResp<>();
 
-        docService.delete(id);
-
-        LOG.info("ConID="+id);
+        List<String> list = Arrays.asList(idsStr.split(","));
+        List<Long> res = new ArrayList<>();
+        for (String str : list) {
+            res.add(Long.valueOf(str));
+        }
+        docService.delete(res);
 
         return resp;
 

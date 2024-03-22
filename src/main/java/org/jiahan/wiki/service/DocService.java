@@ -94,5 +94,13 @@ public class DocService {
         LOG.info("SerID="+id);
 
     }
+    public void delete(List<Long> ids){
+
+        DocExample docExample = new DocExample();
+        DocExample.Criteria criteria = docExample.createCriteria();
+        criteria.andIdIn(ids);
+        docMapper.deleteByExample(docExample);
+
+    }
 
 }
