@@ -9,7 +9,7 @@ public class PageReq {
     private int page;
 
     @NotNull(message = "NOT NULL")
-    @Max(value = 100,message = "NO MORE THAN 1000 BOOKS")
+    @Max(value = 1000,message = "NO MORE THAN 1000 BOOKS")
     private int size;
 
     public int getPage() {
